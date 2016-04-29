@@ -12,6 +12,6 @@ class User: NSObject {
     var icon:String?
     
     override internal var description: String {
-        return "name: \(name) \n icon:\(icon) \n"
+        return "{ name: \(name)  icon:\(icon)}"
     }
 }

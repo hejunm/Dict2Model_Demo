@@ -11,9 +11,9 @@ class UserGroup: NSObject,DictModelProtocol {
     var groupName:String?;    //团队名称
     var numbers:NSArray?       //成员
     
-//    override internal var description: String {
-//        return "groupName: \(groupName) \n numbers:\(numbers) \n"
-//    }
+    override internal var description: String {
+        return "{groupName: \(groupName) \n numbers:\(numbers) \n}"
+    }
     
     static func customClassMapping() -> [String: String]?{
         return ["numbers":"User"];

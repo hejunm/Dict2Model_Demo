@@ -14,6 +14,6 @@ class Status :NSObject {
     
     //描述， 可以在调试的时候打印输出
     override internal var description: String {
-        return "text:\(text)\n user:\(user)\nretweetedStatus:\(retweetedStatus)\n"
+        return "{text:\(text)\n user:\(user)\n  retweetedStatus:\(retweetedStatus)\n}"
     }
 }

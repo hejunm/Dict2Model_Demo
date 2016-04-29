@@ -16,39 +16,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        //func1()
-        //func2()
-        //func3()
-        //func4()
+        func1()
+        func2()
+        func3()
+        func4()
         
         func5()
-        //func6()
-        //func7()
+        func6()
+        func7()
         
         return true
     }
     
-    /**
-    1, 最简单的字典转模型
-     
-    name: Optional("Jack")
-    icon:Optional("lufy.png")
-    */
+
+    // 1, 最简单的字典转模型
+
     func func1(){
         let dict = ["name":"Jack","icon":"lufy.png"]
         if let user = User.objectWithKeyValues(dict) as? User{
-             print("\(user)")
+             print(user)
         }
     }
     
     // 2, 模型中包裹模型
-    /**
-    text:Optional("Agree!Nice weather!")
-    user:Optional(name: Optional("Jack")  icon:Optional("lufy.png"))
-    retweetedStatus:Optional(text:Optional("Nice weather!")
-                             user:Optional(name: Optional("Rose")icon:Optional("nami.png"))
-                             retweetedStatus:nil)
-    */
     func func2(){
         let dict = ["text":"Agree!Nice weather!",
                      "user":["name":"Jack",
@@ -61,20 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               ]
         ]
         if let status = Status.objectWithKeyValues(dict) as? Status{
-            print("\(status)")
+            print(status)
         }
        
     }
 
     // 3,字典中包裹数组， 数组中的元素是 一个模型对应的字典
-    /**
-    groupName:Optional("Dream Team")
-      numbers:Optional((
-                        "name: Optional(\"Jack\") \n icon:Optional(\"lufy.png\") \n",
-                        "name: Optional(\"Rose\") \n icon:Optional(\"nami.png\") \n"
-    ))
-    */
-    
     func func3(){
         let dict = ["groupName":"Dream Team",
                          "numbers":[["name":"Jack",
@@ -85,27 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 ]]
                     ]
         if let group = UserGroup.objectWithKeyValues(dict){
-            print("\(group)")
+            print(group)
         }
     }
     
     //4, 将一个字典数组转成模型数组
-    /**
-    text:Optional("Agree!Nice weather!")
-    user:Optional(name: Optional("Jack")icon:Optional("lufy.png"))
-    retweetedStatus:Optional(text:Optional("Nice weather!")
-                             user:Optional(name: Optional("Rose") icon:Optional("nami.png"))
-                             retweetedStatus:nil
-    )
-    
-    text:Optional("2___Agree!Nice weather!")
-    user:Optional(name: Optional("2___Jack")icon:Optional("2___lufy.png"))
-    retweetedStatus:Optional(text:Optional("2___Nice weather!")
-                             user:Optional(name: Optional("2___Rose")icon:Optional("2___nami.png"))
-                             retweetedStatus:nil
-    )
-    
-    */
     func func4(){
         let arrayOfStatus = [["text":"Agree!Nice weather!",
                              "user":["name":"Jack",
@@ -155,15 +121,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     //6, 模型传字典， 模型中还有模型
-    /**
-    Optional(["text": this is original status, 
-              "user": {icon = "my.png"; name = "original user";}, 
-              "retweetedStatus": {
-                                text = "this is retweeted status";
-                                user =  {icon = "my.png";name = "retweeted user hejunm";};
-                                }
-            ])
-    */
     func func6(){
 
         let user = User()
@@ -195,15 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //7, 模型数组转字典数组
-    /**
-    Optional([{
-    icon = "my.png_1";
-    name = "hejunm_1";
-    }, {
-    icon = "my.png_2";
-    name = "hejunm_2";
-    }])
-    */
     func func7(){
         
         let user1 = User()
