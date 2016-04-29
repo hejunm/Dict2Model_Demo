@@ -18,9 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //func1()
         //func2()
-        func3()
-        func4()
+        //func3()
+        //func4()
         
+        func5()
+        //func6()
+        //func7()
         
         return true
     }
@@ -41,15 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 2, 模型中包裹模型
     /**
     text:Optional("Agree!Nice weather!")
-    user:Optional(name: Optional("Jack")
-    icon:Optional("lufy.png")
-    )
+    user:Optional(name: Optional("Jack")  icon:Optional("lufy.png"))
     retweetedStatus:Optional(text:Optional("Nice weather!")
-    user:Optional(name: Optional("Rose")
-    icon:Optional("nami.png")
-    )
-    retweetedStatus:nil
-    )
+                             user:Optional(name: Optional("Rose")icon:Optional("nami.png"))
+                             retweetedStatus:nil)
     */
     func func2(){
         let dict = ["text":"Agree!Nice weather!",
@@ -70,10 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // 3,字典中包裹数组， 数组中的元素是 一个模型对应的字典
     /**
-    groupName: Optional("Dream Team")
-    numbers:Optional((
-    "name: Optional(\"Jack\") \n icon:Optional(\"lufy.png\") \n",
-    "name: Optional(\"Rose\") \n icon:Optional(\"nami.png\") \n"
+    groupName:Optional("Dream Team")
+      numbers:Optional((
+                        "name: Optional(\"Jack\") \n icon:Optional(\"lufy.png\") \n",
+                        "name: Optional(\"Rose\") \n icon:Optional(\"nami.png\") \n"
     ))
     */
     
@@ -94,25 +92,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //4, 将一个字典数组转成模型数组
     /**
     text:Optional("Agree!Nice weather!")
-    user:Optional(name: Optional("Jack")
-    icon:Optional("lufy.png")
-    )
+    user:Optional(name: Optional("Jack")icon:Optional("lufy.png"))
     retweetedStatus:Optional(text:Optional("Nice weather!")
-    user:Optional(name: Optional("Rose")
-    icon:Optional("nami.png")
-    )
-    retweetedStatus:nil
+                             user:Optional(name: Optional("Rose") icon:Optional("nami.png"))
+                             retweetedStatus:nil
     )
     
     text:Optional("2___Agree!Nice weather!")
-    user:Optional(name: Optional("2___Jack")
-    icon:Optional("2___lufy.png")
-    )
+    user:Optional(name: Optional("2___Jack")icon:Optional("2___lufy.png"))
     retweetedStatus:Optional(text:Optional("2___Nice weather!")
-    user:Optional(name: Optional("2___Rose")
-    icon:Optional("2___nami.png") 
-    )
-    retweetedStatus:nil
+                             user:Optional(name: Optional("2___Rose")icon:Optional("2___nami.png"))
+                             retweetedStatus:nil
     )
     
     */
@@ -140,90 +130,100 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if let status = Status.objectArrayWithKeyValuesArray(arrayOfStatus){
             for item in status{
-                print("\(item)")
+                print(item)
             }
         }
     }
     
     
+    /**-----------------------------------------*/
+    
+     //5,  模型传字典，最简单形式    Optional(["icon": my.png, "name": hejunm])
+    func func5(){
+        let user = User()
+        user.name = "hejunm"
+        user.icon = "my.png"
+        if let dict = user.keyValues{
+            do{ //转化为JSON 字符串
+                let data = try NSJSONSerialization.dataWithJSONObject(dict, options: .PrettyPrinted)
+                print(NSString(data: data, encoding: NSUTF8StringEncoding))
+            }catch{
+                
+            }
+        }
+    }
     
     
-    
+    //6, 模型传字典， 模型中还有模型
+    /**
+    Optional(["text": this is original status, 
+              "user": {icon = "my.png"; name = "original user";}, 
+              "retweetedStatus": {
+                                text = "this is retweeted status";
+                                user =  {icon = "my.png";name = "retweeted user hejunm";};
+                                }
+            ])
+    */
+    func func6(){
 
-    //
-    //        for var item in (status! as! [Status]){
-    //            print(item.description)
-    //        }
-    
-    //        //5,  模型传字典，最简单形式
-    //        let user = User()
-    //        user.name = "hejunm"
-    //        user.icon = "my.png"
-    //        let dict = user.keyValues
-    //        //6, 模型传字典， 模型中还有模型
-    //
-    //        let user = User()
-    //        user.name = "retweeted user hejunm"
-    //        user.icon = "my.png"
-    //
-    //        let retweetedStatus = Status();
-    //        retweetedStatus.text = "this is retweeted status";
-    //        retweetedStatus.user = user
-    //
-    //
-    //        let oriUser = User()
-    //        oriUser.name = "original user"
-    //        oriUser.icon = "my.png"
-    //
-    //        let oriStatus = Status();
-    //        oriStatus.text = "this is original status"
-    //        oriStatus.user = oriUser
-    //        oriStatus.retweetedStatus = retweetedStatus
-    //
-    //        let dic =  oriStatus.keyValues
-    //
-    //        print(dic)
-    //        /**
-    //        Optional(
-    //        ["text": this is original status,
-    //         "user": {
-    //                    icon = "my.png";
-    //                    name = "original user";
-    //                 },
-    //        "retweetedStatus": {
-    //            text = "this is retweeted status";
-    //            user = {
-    //                        icon = "my.png";
-    //                        name = "retweeted user hejunm";
-    //                   };
-    //        }])
-    //
-    //        */
-    
-    
-    //7,  模型数据
-    //        let user1 = User()
-    //        user1.name = "hejunm_1"
-    //        user1.icon = "my.png_1"
-    //
-    //        let user2 = User()
-    //        user2.name = "hejunm_2"
-    //        user2.icon = "my.png_2"
-    //        
-    //        let userArray = [user1,user2] as NSArray
-    //        print(userArray.keyValuesArray)
-    //        
-    //        
-    //        /*** Optional([
-    //        {
-    //            icon = "my.png_1";
-    //            name = "hejunm_1";
-    //        }, 
-    //        {
-    //            icon = "my.png_2";
-    //            name = "hejunm_2";
-    //        }])*/
-    
+        let user = User()
+        user.name = "retweeted user hejunm"
+        user.icon = "my.png"
 
+        let retweetedStatus = Status();
+        retweetedStatus.text = "this is retweeted status";
+        retweetedStatus.user = user
+
+
+        let oriUser = User()
+        oriUser.name = "original user"
+        oriUser.icon = "my.png"
+
+        let oriStatus = Status();
+        oriStatus.text = "this is original status"
+        oriStatus.user = oriUser
+        oriStatus.retweetedStatus = retweetedStatus
+
+        let dict =  oriStatus.keyValues
+        do{ //转化为JSON 字符串
+           let data = try NSJSONSerialization.dataWithJSONObject(dict!, options: .PrettyPrinted)
+            print(NSString(data: data, encoding: NSUTF8StringEncoding))
+        
+        }catch{
+            
+        }
+    }
+    
+    //7, 模型数组转字典数组
+    /**
+    Optional([{
+    icon = "my.png_1";
+    name = "hejunm_1";
+    }, {
+    icon = "my.png_2";
+    name = "hejunm_2";
+    }])
+    */
+    func func7(){
+        
+        let user1 = User()
+        user1.name = "hejunm_1"
+        user1.icon = "my.png_1"
+
+        let user2 = User()
+        user2.name = "hejunm_2"
+        user2.icon = "my.png_2"
+
+        let userArray = [user1,user2] as NSArray
+       
+        if let dicts = userArray.keyValuesArray{
+            do{
+                let data = try NSJSONSerialization.dataWithJSONObject(dicts, options: .PrettyPrinted)
+                print(NSString(data: data, encoding: NSUTF8StringEncoding))
+            }catch{
+                
+            }
+        }
+    }
 }
 

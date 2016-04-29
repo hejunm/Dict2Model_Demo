@@ -18,38 +18,36 @@ import Foundation
  value: 字典[key1:value1, key2:value2] 对应的模型
 */
 
-
 @objc public protocol DictModelProtocol{
     static func customClassMapping() -> [String: String]?
 }
+
+
 extension NSObject{
-    /**
-         字典传模型
-         dict: 要进行转换的字典
-         cls:  转换成的模型类 的类型
-     */
+ 
+    //dict: 要进行转换的字典
     class func objectWithKeyValues(dict: NSDictionary)->AnyObject?{
-        if HEFoundation.isClassFromFoundation(self){
-            print("使用自定义的模型类, 而不是 Foundation 中自带的")
+        if HEFoundation.isClassFromFoundation(self) {
+            print("只有自定义模型类才可以字典转模型")
             assert(true)
             return nil
         }
         
         let obj:AnyObject = self.init()
-        var cls:AnyClass = self.classForCoder()
+        var cls:AnyClass = self.classForCoder() //当前类的类型
         
         while("NSObject" !=  "\(cls)"){
             var count:UInt32 = 0
-            let properties =  class_copyPropertyList(cls, &count)
+            let properties =  class_copyPropertyList(cls, &count)                 //获取属性列表
             for i in 0..<count{
-                let property = properties[Int(i)]                                 //获取模型中的某一个属性
-                let propertyKey = String.fromCString(property_getName(property))!         //模型中属性名称
-                if propertyKey == "description"{
-                    continue
-                }
                 
-                let propertyType = String.fromCString(property_getAttributes(property))!  //模型中属性类型
-                var value:AnyObject? = dict[propertyKey]
+                let property = properties[Int(i)]                                 //获取模型中的某一个属性
+                let propertyKey = String.fromCString(property_getName(property))! //属性名称
+                if propertyKey == "description"{ continue  }                      //description是Foundation中的计算型属性，是实例的描述信息
+                let propertyType = String.fromCString(property_getAttributes(property))!  //属性类型
+                
+                var value:AnyObject? = dict[propertyKey] //取得字典中的值
+               
                 if let tempValue = value{
                     let dictType = "\(tempValue.classForCoder)"
                     
