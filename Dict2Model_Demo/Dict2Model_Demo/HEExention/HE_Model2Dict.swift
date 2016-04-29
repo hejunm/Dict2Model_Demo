@@ -9,9 +9,9 @@
 import Foundation
 
 extension NSObject{
-    var keyValues:[String:AnyObject]?{  //获取一个模型对应的字典
+    var keyValues:[String:AnyObject]?{                   //获取一个模型对应的字典
         get{
-            var result = [String: AnyObject]() //保存结果
+            var result = [String: AnyObject]()           //保存结果
             var classType:AnyClass = self.classForCoder
             while("NSObject" !=  "\(classType)" ){
                 var count:UInt32 = 0
@@ -21,20 +21,20 @@ extension NSObject{
                     let propertyKey = String.fromCString(property_getName(property))!         //模型中属性名称
                     let propertyType = String.fromCString(property_getAttributes(property))!  //模型中属性类型
                     
-                    if "description" == propertyKey{ continue }  //描述，不是属性
+                    if "description" == propertyKey{ continue }   //描述，不是属性
                     
                     let tempValue:AnyObject!  = self.valueForKey(propertyKey)
-                    if  tempValue == nil { continue }                           //值为nil时,不再操作
+                    if  tempValue == nil { continue }
                     
-                    if let _ =  HEFoundation.getType(propertyType) {                  //1,自定义的类
+                    if let _ =  HEFoundation.getType(propertyType) {         //1,自定义的类
                         result[propertyKey] = tempValue.keyValues
-                    }else if (propertyType.containsString("NSArray")){                 //2, 数组, 将数组中的模型转成字典
-                        result[propertyKey] = tempValue.keyValuesArray                //基本
+                    }else if (propertyType.containsString("NSArray")){       //2, 数组, 将数组中的模型转成字典
+                        result[propertyKey] = tempValue.keyValuesArray       //3， 基本数据
                     }else{
                         result[propertyKey] = tempValue
                     }
                 }
-                free(properties)    //在遍历时， 不会遍历父类的属性
+                free(properties)
                 classType = classType.superclass()!
             }
             if result.count == 0{
@@ -56,11 +56,11 @@ extension NSArray{  //数组的拓展
                     let subKeyValues:[String:AnyObject]! = item.keyValues
                     if  subKeyValues == nil {continue}
                     result.append(subKeyValues)
-                }else if item.classForCoder == NSArray.classForCoder(){   //2, 如果item 是数组
+                }else if item.classForCoder == NSArray.classForCoder(){    //2, 如果item 是数组
                     let subKeyValues:[AnyObject]! = item.keyValuesArray
                     if  subKeyValues == nil {continue}
                     result.append(subKeyValues)
-                }else{                                                    //3, 基本数据类型
+                }else{                                                     //3, 基本数据类型
                     result.append(item)
                 }
             }
